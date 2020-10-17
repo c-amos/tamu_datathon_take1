@@ -1,9 +1,9 @@
 # working with movehub csv
 
-# imports
+# imports ---------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
-#import seaborn as sn
+#import seaborn as sn # remind me to un-comment this line whenever we start needing the visualizations
 
 # read csv
 df = pd.read_csv('movehubqualityoflife.csv').set_index('City')
