@@ -10,6 +10,8 @@ url = 'https://fragilestatesindex.org/wp-content/uploads/2020/05/fsi-2020.xlsx'
 urllib.request.Request(url, headers={'User-agent' : 'Mozilla/5.0'})
 # ^ should retrieve excel file directly; double check
 
+# with the csv's try: pd.read_csv('url to csv')
+
 df = pd.read_excel(url)
 #show first five rows of the data
 df.head()
