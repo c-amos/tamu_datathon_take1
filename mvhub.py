@@ -6,7 +6,7 @@ import numpy as np
 #import seaborn as sn # remind me to un-comment this line whenever we start needing the visualizations
 
 # read csv
-df = pd.read_csv('movehubqualityoflife.csv').set_index('City')
+df = pd.read_csv('movehubqualityoflife.csv')
 #print(df.head())
 
 # reversing crime ratings for accuracy
@@ -24,8 +24,9 @@ for row in range(0,len(df)):
     var += obj
   vars.append(var)
 
+# adding end totals of scores
 df.insert(len(df.columns),'Totals',vars)
 print(df)
 
-# adding end totals of scores
-# print(len(df.iloc[1]))
+ax = sn.barplot(x=['City'],y=['Totals']) # fix this
+plt.show()
