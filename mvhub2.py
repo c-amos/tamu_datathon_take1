@@ -22,6 +22,7 @@ other_csv = pd.read_csv('sample.csv')
 df.insert(len(df.columns),'Country',other_csv.Country)
 df['Rank'] = df['Rank'] + 1
 
+df.to_csv('movehubqualityoflife.csv')
 #print(df)
 
 le_df = pd.read_csv('LifeExpectancy.csv')
