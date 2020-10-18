@@ -28,17 +28,29 @@ for i in range(0,len(df)):
   #print(float(value.hf_score))
   try: df.loc[i,'hf_score'] = float(value.hf_score)
   except: pass
-  #print(df.iloc[i])
+  try: df.loc[i,'hf_rank'] = int(value.hf_rank)
+  except: pass
   print('\r'+str(i)+' out of '+str(len(df))+' complete',end='')
 
-print(df)
+#print(df)
 
 df.to_csv('homestretch.csv')
 
 # ask for user input ----------------------------------------------------------
-#for index in overall_df.columns:
-#  inp = input(f'How much do you value {index} on a scale from 1 to 10?')
-#  overall_df[index] = int(inp)*overall_df[index]
+overall_df = pd.read_csv('homestretch.csv').drop(columns=['Unnamed: 0','lat','lng','City','hf_rank','Country'])
+#print(overall_df.columns)
+
+using = list(overall_df.columns)
+print(using)
+
+for index in using:
+  inp = input(f'How much do you value {index} on a scale from 1 to 10?\t')
+  overall_df[index] = int(inp)*overall_df[index]
+
+print(overall_df)
+
+# end total score column ----------------------------------------------------------------------------
+overall_df['End Total Score'] =
 
 # sum the values in each index (i.e. column) for each city (i.e. row), then rank the cities by total value; return a ranked list
 # e.g. Ulaanbaatar totals at 400, Sao Paulo at 300, Gaborone at 200; therefore, 1,2,3
