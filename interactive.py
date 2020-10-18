@@ -32,6 +32,9 @@ for i in range(0,len(df)):
   print('\r'+str(i)+' out of '+str(len(df))+' complete',end='')
 
 print(df)
+
+df.to_csv('homestretch.csv')
+
 # ask for user input ----------------------------------------------------------
 #for index in overall_df.columns:
 #  inp = input(f'How much do you value {index} on a scale from 1 to 10?')
