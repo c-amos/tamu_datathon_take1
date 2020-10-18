@@ -11,7 +11,8 @@ df = pd.read_csv('movehubqualityoflife.csv')
 
 # reversing crime ratings for accuracy
 df['Safety Rating'] = 100 - df['Crime Rating']
-df = df.drop(columns='Crime Rating')
+df['1 - Pollution'] = 100 - df['Pollution']
+df = df.drop(columns=['Crime Rating','Pollution'])
 
 # calculating end totals
 temp_df = df[['Safety Rating','Purchase Power','Health Care','Pollution','Quality of Life']]
@@ -27,6 +28,12 @@ for row in range(0,len(df)):
 # adding end totals of scores
 df.insert(len(df.columns),'Totals',vars)
 print(df)
+
+# turn totals into rankings
+df = df.sort_values(by='Totals')
+
+# weighting system
+df['Pollution'] = 4*df['Pollution']
 
 ax = sn.barplot(x=['City'],y=['Totals']) # fix this
 plt.show()
