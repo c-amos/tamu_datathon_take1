@@ -21,15 +21,17 @@ for name in (df2.columns):
   if name in df.columns: pass
   else: df[name] = 0.0
 
+for i in range(0,len(df)):
+  #print(df.iloc[i].hf_score)
+  value = df2.loc[df2.Country == df.iloc[i].Country]
+  #print(value)
+  #print(float(value.hf_score))
+  try: df.loc[i,'hf_score'] = float(value.hf_score)
+  except: pass
+  #print(df.iloc[i])
+  print('\r'+str(i)+' out of '+str(len(df))+' complete',end='')
 
-for i in range(0,len(df2)):
-  active_country = df2.iloc[i].Country
-  print(df2.loc[df2['Country'] == active_country])
-  active_df = (df.loc[df['Country'] == active_country])
-  for city in (active_df.City):
-    df.loc['City' == city, 'hf_score'] = df2.loc['City' = city]
-  break
-
+print(df)
 # ask for user input ----------------------------------------------------------
 #for index in overall_df.columns:
 #  inp = input(f'How much do you value {index} on a scale from 1 to 10?')
