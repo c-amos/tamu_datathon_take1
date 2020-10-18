@@ -14,6 +14,10 @@ df2 = pd.read_csv('HFI.csv'
 
 #print(df2)
 
+# introduction ------------------------------------------------------------------------------------
+print("This script is designed to take user input regarding their opinions on factors involved in their ideal quality of life.",
+"The script will use this information to aggregate a 'score' regarding the fitness of each city, listing the top and bottom five.")
+
 # match countries between df and df2 ----------------------------------------------------------------
 
 ## create columns from df2
@@ -30,27 +34,45 @@ for i in range(0,len(df)):
   except: pass
   try: df.loc[i,'hf_rank'] = int(value.hf_rank)
   except: pass
-  print('\r'+str(i)+' out of '+str(len(df))+' complete',end='')
+  print('\r'+str(i+1)+' out of '+str(len(df))+' complete',end='')
+print('Loading complete')
 
 #print(df)
 
 df.to_csv('homestretch.csv')
 
 # ask for user input ----------------------------------------------------------
-overall_df = pd.read_csv('homestretch.csv').drop(columns=['Unnamed: 0','lat','lng','City','hf_rank','Country'])
+overall_df = pd.read_csv('homestretch.csv').drop(columns=['Unnamed: 0','lat','lng','hf_rank','Country'])
 #print(overall_df.columns)
 
 using = list(overall_df.columns)
-print(using)
-
+using.remove('City')
+#print(using)
+print('\n')
 for index in using:
   inp = input(f'How much do you value {index} on a scale from 1 to 10?\t')
   overall_df[index] = int(inp)*overall_df[index]
 
-print(overall_df)
+#print(overall_df)
+
+overall_df['End Total'] = 0.0
 
 # end total score column ----------------------------------------------------------------------------
-overall_df['End Total Score'] =
+for i in range(0,len(overall_df)):
+  sum = 0.0
+  for element in overall_df.iloc[i]:
+    try: sum += element
+    except: pass
+  overall_df.loc[i,'End Total'] = sum
 
+#overall_df['End Total Score'] =
 # sum the values in each index (i.e. column) for each city (i.e. row), then rank the cities by total value; return a ranked list
 # e.g. Ulaanbaatar totals at 400, Sao Paulo at 300, Gaborone at 200; therefore, 1,2,3
+
+overall_df.to_csv('final_prod.csv')
+working_df = pd.read_csv('final_prod.csv').sort_values('End Total',ascending=False).set_index('End Total')
+#print(working_df)
+print("Your top 5 suggested cities are: ")
+print(working_df.City.head())
+print("Your top 5 LEAST suggested cities are: ")
+print(working_df.City.tail())
